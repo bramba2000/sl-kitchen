@@ -66,8 +66,9 @@ void main() {
           addons: ['addon5', 'addon6'],
         ),
       ];
-      dishes.forEach(
-          (dish) => fakeInstance.collection('dishes').add(dish.toJson()));
+      for (var dish in dishes) {
+        fakeInstance.collection('dishes').add(dish.toJson());
+      }
       expect(api.getDishes(useCache: true), completion(containsAll(dishes)));
     });
 
