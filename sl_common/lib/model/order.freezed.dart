@@ -111,7 +111,8 @@ class __$$_OrderCopyWithImpl<$Res> extends _$OrderCopyWithImpl<$Res, _$_Order>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$_Order implements _Order {
   const _$_Order(
       {required final List<Dish> dishes,

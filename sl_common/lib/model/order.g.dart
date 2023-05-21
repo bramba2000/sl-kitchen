@@ -15,7 +15,7 @@ _$_Order _$$_OrderFromJson(Map<String, dynamic> json) => _$_Order(
     );
 
 Map<String, dynamic> _$$_OrderToJson(_$_Order instance) => <String, dynamic>{
-      'dishes': instance.dishes,
+      'dishes': instance.dishes.map((e) => e.toJson()).toList(),
       'identifier': instance.identifier,
       'status': _$OrderStatusEnumMap[instance.status]!,
     };

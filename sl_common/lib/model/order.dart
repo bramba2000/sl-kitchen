@@ -7,6 +7,8 @@ part 'order.g.dart';
 
 @freezed
 class Order with _$Order {
+  // ignore: invalid_annotation_target
+  @JsonSerializable(explicitToJson: true)
   const factory Order(
       {required List<Dish> dishes,
       required String identifier,
