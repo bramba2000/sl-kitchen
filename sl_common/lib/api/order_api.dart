@@ -3,11 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart' as fs;
 
 class OrderApi {
   static const String _collectionPath = 'orders';
+  static const String _statsPath = '--stats--';
+  static const String _orderCountField = 'orderCount';
 
   OrderApi([fs.FirebaseFirestore? instance])
-      : _instance = instance ?? fs.FirebaseFirestore.instance;
+      : _instance = instance ?? fs.FirebaseFirestore.instance {
+    _statsDocument = _instance.collection(_collectionPath).doc(_statsPath);
+  }
 
   final fs.FirebaseFirestore _instance;
+  late final fs.DocumentReference<Map<String, dynamic>> _statsDocument;
   final Map<String, Order> _cache = {};
 
   String _getIdByIdentifier(Order previous) =>
@@ -38,9 +43,21 @@ class OrderApi {
   }
 
   Future<void> addOrder(Order order) async {
-    final result =
-        await _instance.collection(_collectionPath).add(order.toJson());
-    _cache[result.id] = order;
+    final reference = _instance.collection(_collectionPath).doc();
+    await _instance.runTransaction<int>((transaction) async {
+      final response = await transaction.get(_statsDocument);
+      final count = (response.data()?[_orderCountField] ?? 0) + 1;
+      transaction.set(_statsDocument, {_orderCountField: count},
+          fs.SetOptions(merge: true));
+      transaction.set(
+        reference,
+        order.identifier.isNotEmpty
+            ? order.toJson()
+            : order.copyWith(identifier: count.toString()).toJson(),
+      );
+      return count;
+    });
+    _cache[reference.id] = order;
   }
 
   Future<void> updateOrder(Order previous, Order order) async {

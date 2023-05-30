@@ -35,8 +35,13 @@ void main() {
           ]);
       await api.addOrder(order);
       expect((await fakeInstance.collection('orders').get()).size, isNonZero);
-      Order result = Order.fromJson(
-          (await fakeInstance.collection('orders').get()).docs.first.data());
+      Order result = Order.fromJson((await fakeInstance
+              .collection('orders')
+              .where('identifier', isEqualTo: 'identifier')
+              .get())
+          .docs
+          .first
+          .data());
       expect(result, isNotNull);
       expect(result.identifier, 'identifier');
       expect(result.status, OrderStatus.delivered);
@@ -62,10 +67,10 @@ void main() {
             ),
           ]);
       await fakeInstance.collection('orders').add(order.toJson());
-      expect(api.getOrder('identifier', useCache: true),
+      await expectLater(api.getOrder('identifier', useCache: true),
           completion(equals(order)));
-      expect(api.getOrder('identifier'), completion(equals(order)));
-      expect(api.getOrder('identifier', useCache: true),
+      await expectLater(api.getOrder('identifier'), completion(equals(order)));
+      await expectLater(api.getOrder('identifier', useCache: true),
           completion(equals(order)));
     });
 
@@ -184,9 +189,14 @@ void main() {
       final updatedOrder = order.copyWith(status: OrderStatus.pending);
       await api.addOrder(order);
       await api.updateOrder(order, updatedOrder);
-      expect((await fakeInstance.collection('orders').get()).docs.length, 1);
-      final result = Order.fromJson(
-          (await fakeInstance.collection('orders').get()).docs.first.data());
+      expect((await fakeInstance.collection('orders').get()).docs.length, 2);
+      final result = Order.fromJson((await fakeInstance
+              .collection('orders')
+              .where('identifier', isEqualTo: 'identifier')
+              .get())
+          .docs
+          .first
+          .data());
       expect(result, updatedOrder);
     });
   });

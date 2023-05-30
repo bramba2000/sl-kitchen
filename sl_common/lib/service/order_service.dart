@@ -50,7 +50,7 @@ class OrderService {
   }) async {
     final order = Order(
       dishes: dishes,
-      identifier: identifier ?? DateTime.now().toString(),
+      identifier: identifier ?? "",
       status: OrderStatus.pending,
     );
     await _api.addOrder(order);
