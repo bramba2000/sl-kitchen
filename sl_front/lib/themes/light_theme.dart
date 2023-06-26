@@ -5,7 +5,7 @@ class SLKTheme {
   static const accentColor = Color(0xFF616068);
   static const backgroundColor = Color(0xFFEDEDED);
 
-  static ThemeData get ligthTheme =>
+  static ThemeData get lightTheme =>
       ThemeData.light(useMaterial3: true).copyWith(
           colorScheme: ColorScheme.fromSeed(seedColor: primaryColor)
               .copyWith(background: backgroundColor),
