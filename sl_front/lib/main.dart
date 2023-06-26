@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sl_front/themes/light_theme.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,8 +10,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
+    return MaterialApp(
+      theme: SLKTheme.ligthTheme,
+      home: const HomePage(),
     );
   }
 }
@@ -41,7 +43,7 @@ class HomePage extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
       ),
-      bottomSheet: _Footer(),
+      bottomNavigationBar: _Footer(),
     );
   }
 }
@@ -72,7 +74,7 @@ class _Header extends StatelessWidget {
               TextSpan(
                 text: 'SAN LUIGI ',
                 style: TextStyle(
-                  color: Color(0xFFC8AA87),
+                  color: SLKTheme.primaryColor,
                   fontSize: 24,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w700,
@@ -81,7 +83,7 @@ class _Header extends StatelessWidget {
               TextSpan(
                 text: 'KITCHEN',
                 style: TextStyle(
-                  color: Color(0xFF616068),
+                  color: SLKTheme.accentColor,
                   fontSize: 24,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w700,
@@ -104,6 +106,7 @@ class _Footer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _theme = Theme.of(context);
     return Container(
       height: _height,
       padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
