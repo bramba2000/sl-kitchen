@@ -37,9 +37,11 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: const Center(
-        child: Text('Hello Worlds!'),
+      body: const SizedBox(
+        width: double.infinity,
+        height: double.infinity,
       ),
+      bottomSheet: _Footer(),
     );
   }
 }
@@ -91,6 +93,51 @@ class _Header extends StatelessWidget {
         ),
       ],
     );
-    ;
+  }
+}
+
+class _Footer extends StatelessWidget {
+  static const _horizontalPadding = 30.0;
+  static const _height = 50.0;
+  static const _buttonPadding =
+      EdgeInsets.symmetric(horizontal: 20, vertical: 10);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: _height,
+      padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ElevatedButton(
+              onPressed: () => {},
+              child: const Padding(
+                padding: _buttonPadding,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(Icons.shopping_cart),
+                    SizedBox.square(
+                      dimension: 10,
+                    ),
+                    Text(
+                      'CARRELLO VUOTO',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+        ],
+      ),
+    );
   }
 }
