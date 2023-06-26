@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sl_common/model/dish.dart';
 import 'package:sl_front/themes/light_theme.dart';
+import 'package:sl_front/widget/dish_tile.dart';
 
 void main() {
   runApp(const MainApp());
@@ -22,6 +24,8 @@ class HomePage extends StatelessWidget {
     super.key,
   });
 
+  static const _globalPadding = EdgeInsets.all(10);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,9 +43,15 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: const SizedBox(
-        width: double.infinity,
-        height: double.infinity,
+      body: Container(
+        padding: _globalPadding,
+        child: const DishTile(
+          Dish(
+              name: 'Pasta al ragù',
+              description:
+                  'Pasta al ragù con carne di manzo e verdure preparato a mano stamattina fresco dalla nonna di zio tobia',
+              price: 10.0),
+        ),
       ),
       bottomNavigationBar: _Footer(),
     );
@@ -99,7 +109,6 @@ class _Header extends StatelessWidget {
 }
 
 class _Footer extends StatelessWidget {
-  static const _horizontalPadding = 30.0;
   static const _height = 50.0;
   static const _buttonPadding =
       EdgeInsets.symmetric(horizontal: 20, vertical: 10);
