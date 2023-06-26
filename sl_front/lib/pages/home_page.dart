@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../widgets/dish_tile.dart';
 import 'package:sl_common/model/dish.dart';
+import 'package:sl_common/service/dish_service.dart' show menuServiceProvider;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../themes/light_theme.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,15 +10,13 @@ class HomePage extends StatelessWidget {
     super.key,
   });
 
-  static const _globalPadding = EdgeInsets.all(10);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70.0,
         backgroundColor: Colors.white,
-        title: const _Header(),
+        title: _Header(),
         actions: [
           IconButton(
             icon: Icon(
@@ -27,24 +27,39 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
-        padding: _globalPadding,
-        child: const DishTile(
-          Dish(
-              name: 'Pasta al ragù',
-              description:
-                  'Pasta al ragù con carne di manzo e verdure preparato a mano stamattina fresco dalla nonna di zio tobia',
-              price: 10.0),
-        ),
-      ),
+      body: const Menu(),
       bottomNavigationBar: _Footer(),
     );
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header({super.key});
+class Menu extends ConsumerWidget {
+  static const _globalPadding = EdgeInsets.all(10);
 
+  const Menu({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final menu = ref.watch(menuServiceProvider(null));
+    return menu.when(
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
+      error: (error, stackTrace) => Center(
+        child: Text('Error: $error'),
+      ),
+      data: (menu) => ListView.builder(
+        padding: _globalPadding,
+        itemCount: menu.length,
+        itemBuilder: (context, index) {
+          return DishTile(menu[index]);
+        },
+      ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
