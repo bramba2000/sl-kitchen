@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../widgets/dish_tile.dart';
-import 'package:sl_common/model/dish.dart';
 import 'package:sl_common/service/dish_service.dart' show menuServiceProvider;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../themes/light_theme.dart';

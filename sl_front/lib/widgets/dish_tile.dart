@@ -4,7 +4,7 @@ import 'package:sl_common/model/dish.dart';
 class DishTile extends StatelessWidget {
   final Dish _dish;
   final bool hasPicture;
-  const DishTile(this._dish, {super.key}) : hasPicture = true;
+  const DishTile(this._dish, {super.key}) : hasPicture = false;
 
   static const _containerPadding =
       EdgeInsets.symmetric(horizontal: 10, vertical: 5);
