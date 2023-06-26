@@ -64,7 +64,7 @@ class _Header extends StatelessWidget {
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/icons/logo.jpg'),
-              fit: BoxFit.fill,
+              fit: BoxFit.fitHeight,
             ),
           ),
         ),
@@ -109,20 +109,33 @@ class _Footer extends StatelessWidget {
     final _theme = Theme.of(context);
     return Container(
       height: _height,
-      padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding),
-      child: Row(
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        color: _theme.canvasColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.8),
+            spreadRadius: 3,
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      child: const Row(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ElevatedButton(
-              onPressed: () => {},
-              child: const Padding(
+              onPressed: null,
+              child: Padding(
                 padding: _buttonPadding,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.shopping_cart),
+                    Icon(
+                      Icons.shopping_cart,
+                      color: Colors.white,
+                    ),
                     SizedBox.square(
                       dimension: 10,
                     ),
